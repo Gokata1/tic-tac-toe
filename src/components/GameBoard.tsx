@@ -3,12 +3,14 @@ import { twMerge } from "tailwind-merge";
 import { RefreshCcw } from "lucide-react";
 
 const GameBoard = () => {
-  const [board, setBoard] = React.useState<any[]>(Array(9).fill(false));
+  const [board, setBoard] = React.useState<(string | null)[]>(
+    Array(9).fill(false)
+  );
   const [turn, setTurn] = React.useState<"X" | "O">("X");
   const [gameStatus, setGameStatus] = React.useState<
     "running" | "finished" | "draw"
   >("running");
-  const [winner, setWinner] = React.useState<any>(null);
+  const [winner, setWinner] = React.useState<number[] | null>(null);
 
   const resetGame = () => {
     setBoard(Array(9).fill(false));
@@ -16,7 +18,7 @@ const GameBoard = () => {
     setGameStatus("running");
   };
 
-  const winConditions = (board: any[]) => {
+  const winConditions = (board: (string | null)[]) => {
     const winningCombinations = [
       // Rows
       [0, 1, 2],
@@ -30,7 +32,7 @@ const GameBoard = () => {
       [0, 4, 8],
       [2, 4, 6],
     ];
-    for (let [a, b, c] of winningCombinations) {
+    for (const [a, b, c] of winningCombinations) {
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
         setGameStatus("finished");
         setWinner([a, b, c]);
@@ -41,7 +43,7 @@ const GameBoard = () => {
     return null;
   };
 
-  const isDraw = (board: any[]) => {
+  const isDraw = (board: (string | boolean | null)[]) => {
     return !board.includes(false);
   };
 
@@ -72,7 +74,7 @@ const GameBoard = () => {
             )}
             key={index}
             onClick={() => handleClick(index)}
-            disabled={gameStatus === "finished" || ele}
+            disabled={(gameStatus === "finished" || ele) as true}
           >
             {ele || ""}
           </button>
