@@ -1,5 +1,6 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
+import { RefreshCcw } from "lucide-react";
 
 const GameBoard = () => {
   const [board, setBoard] = React.useState<any[]>(Array(9).fill(false));
@@ -57,16 +58,16 @@ const GameBoard = () => {
   return (
     <div className="border-2 rounded-sm border-purple-200">
       <button
-        className="absolute top-5 right-5 px-3 py-2 border rounded-sm"
+        className="absolute w-10 h-10 top-5 right-5 flex items-center justify-center border rounded-full hover:bg-gray-50 shadow-sm hover:shadow-md"
         onClick={() => resetGame()}
       >
-        Reset
+        <RefreshCcw />
       </button>
       <div className="grid grid-cols-3">
         {board.map((ele, index) => (
           <button
             className={twMerge(
-              "w-20 h-20 flex items-center justify-center border rounded-sm disabled:bg-gray-50 text-black text-lg",
+              "w-20 h-20 flex items-center justify-center border rounded-sm disabled:bg-gray-50 text-black text-lg hover:bg-gray-50",
               winner?.includes(index) && "disabled:bg-green-300"
             )}
             key={index}
